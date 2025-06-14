@@ -1,6 +1,6 @@
 {
   "name": "mydocsai",
-  "version": "5.0.5",
+  "version": "5.1.1",
   "description": "A production-ready, responsive AI chatbot component for React applications with streaming support, mobile optimization, and secure API key handling.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -25,7 +25,6 @@
   },
   "scripts": {
     "build": "rollup -c", 
-    
     "dev": "rollup -c -w",
     "prepare": "npm run build",
     "test": "echo \"Tests coming soon\" && exit 0",
