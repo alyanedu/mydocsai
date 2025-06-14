@@ -24,7 +24,8 @@
     "./dist/styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c", 
+    
     "dev": "rollup -c -w",
     "prepare": "npm run build",
     "test": "echo \"Tests coming soon\" && exit 0",
