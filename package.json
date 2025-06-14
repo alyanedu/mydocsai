@@ -1,0 +1,75 @@
+{
+  "name": "mydocsai",
+  "version": "5.0.5",
+  "description": "A production-ready, responsive AI chatbot component for React applications with streaming support, mobile optimization, and secure API key handling.",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./backend": {
+      "import": "./dist/backend.esm.js",
+      "require": "./dist/backend.js",
+      "types": "./dist/backend.d.ts"
+    },
+    "./package.json": "./package.json",
+    "./dist/styles.css": "./dist/styles.css"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "prepare": "npm run build",
+    "test": "echo \"Tests coming soon\" && exit 0",
+    "preversion": "git diff-index --quiet HEAD || (echo '⚠️ Uncommitted changes found. Please commit or stash them.' && exit 1)",
+    "release": "npm version $1 --no-git-tag-version && npm run build && git add . && git commit -m \"chore(release): v$npm_package_version\" && git tag v$npm_package_version && git push origin main && git push origin v$npm_package_version"
+  },
+  "keywords": [
+    "react",
+    "chatbot",
+    "ai",
+    "docs",
+    "widget",
+    "streaming",
+    "responsive",
+    "mobile"
+  ],
+  "author": "Alyan Siddiqui",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alyanedu/mydocsai.git"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "framer-motion": "^10.16.16",
+    "lucide-react": "^0.300.0",
+    "node-fetch": "^2.6.7",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "@babel/preset-react": "^7.23.3",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "postcss": "^8.4.32",
+    "rollup": "^4.9.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "typescript": "^5.3.3"
+  }
+}
