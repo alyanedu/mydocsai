@@ -12,7 +12,7 @@ import fetch from 'node-fetch'; // Using node-fetch for server-side requests
  * @param options Configuration options including your DocsAI API key.
  * @returns An async function that handles the API request.
  */
-export const createDocsAiProxy = ({ docsAiApiKey, docsAiApiBaseUrl = 'https://api.mydocsai.tech/sendmessage' }) => {
+export const createDocsAiProxy = ({ docsAiApiKey, docsAiApiBaseUrl = 'https://api.mydocsai.tech/sendmessage', useReranking = false }) => {
   // SDK-side API key validation for core proxy
   if (!docsAiApiKey) {
     console.error("DocsAI SDK Error (backend-core): 'docsAiApiKey' is required but was not provided to createDocsAiProxy.");
@@ -33,6 +33,18 @@ export const createDocsAiProxy = ({ docsAiApiKey, docsAiApiBaseUrl = 'https://ap
       const requestBody = Buffer.concat(requestBodyBuffer);
       const requestBodyString = requestBody.toString('utf8');
       console.log(`SDK (backend-core): Request body received (length: ${requestBody.length})`);
+
+      // Parse the request body to add useReranking parameter
+      let parsedBody;
+      try {
+        parsedBody = JSON.parse(requestBodyString);
+        parsedBody.useReranking = useReranking;
+      } catch (e) {
+        console.error("SDK (backend-core): Error parsing request body:", e);
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Invalid JSON in request body' }));
+        return;
+      }
 
       // 2. Prepare headers for the upstream API call
       const headers = {
@@ -69,7 +81,7 @@ export const createDocsAiProxy = ({ docsAiApiKey, docsAiApiBaseUrl = 'https://ap
       const docsAiResponse = await fetch(docsAiApiBaseUrl, {
         method: req.method,
         headers: headers,
-        body: requestBodyString, // Send the raw string body
+        body: JSON.stringify(parsedBody), // Send the modified body with useReranking
         // For streaming responses from the upstream, we need to ensure node-fetch handles it.
         // By default, node-fetch's body is a ReadableStream.
       });
